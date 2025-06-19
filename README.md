@@ -2,7 +2,8 @@
 
 * 利用Spring Cloud OpenFeign協助串接coindesk API，以利後續轉換資料(CoinDeskClient.class部分)
 
-* 使用CoinDeskController 呼叫CoinDeskService的方法取得轉換後資料
+* CoinDeskController
+1. 使用GetMapping(coin/coinDesk/getAllCoinDesk)呼叫getAllCoinDesk()取得轉換後資料
 時間部分取updatedISO轉換成yyyy/MM/dd HH:mm:ss形式
 幣別部分原來為map形式，轉為List形式回傳
 中文名稱因coindesk API未提供，所以整理成Enum部分判斷(CoinDeskConst.class)，若有取不到值的部分會回傳空值，可再到enum調整
@@ -41,13 +42,31 @@
 *CRUD部分
 *於h2資料庫先建立一個table currency
 
-*使用CurrencyController 呼叫CurrencyService的方法取得轉換後資料
+*CurrencyController @RequestMapping("coin/currency")
 
-*查詢全部: 直接使用GETMAPPING 取得所有資料後轉換成RESPONSE回傳
-*查詢單一條件:使用POSTMAPPING 以CODE查詢資料庫資料，有對欄位做檢核，及防呆機制
-*新增資料:使用POSTMAPPING將所有REQUEST資料存進資料庫，有對REQUEST欄位做檢核，且若CODE原先已存在則不讓進行調整且報錯，新增完畢會回傳本次新增內容
-*修改資料:使用POSTMAPPING，因REQUEST是使用全部所有的資料，所以欄位檢核目前與新增相同，若CODE並不存在資料表裡會報錯，修改完畢會回傳本次修改內容
-*刪除資料:使用POSTMAPPING，以CODE查詢資料庫資料，有資料存在則進行刪除，但若不存在資料表裡則會報錯
+1. 查詢全部
+   a. 使用@GetMapping("/getAllCurrList") getAllCurrList()方法
+   b.  取得所有資料後轉換成RESPONSE回傳
+2. 查詢單一條件
+   a. 使用@PostMapping("/getCurr") getCurrByCode()方法
+   b. 對欄位做檢核及防呆機制
+   c. 以CODE查詢資料庫資料並回傳
+2. 查詢全部
+   a. 使用@PostMapping("/getCurr") getCurrByCode()方法
+   b. 對欄位做檢核及防呆機制
+   c. 以CODE查詢資料庫資料並回傳
+3. 新增資料
+   a. 使用@PostMapping("/addCurr") addCurr()方法
+   b. 對REQUEST欄位做檢核，且若CODE原先已存在則不讓進行調整且報錯
+   c. 新增完畢會回傳本次新增內容
+4. 修改資料
+   a. 使用@PostMapping("/updateCurr") updateCurr()方法
+   b. REQUEST是使用全部所有的資料，所以欄位檢核目前與新增相同，若CODE並不存在資料表裡會報錯
+   c. 修改完畢會回傳本次修改內容
+5. 刪除資料
+   a. 使用@PostMapping("/deleteCurr") deleteCurr()方法
+   b. 以CODE查詢資料庫資料，若不存在資料表裡會報錯
+   c. 資料存在則進行刪除
 
 *ErrorHandlerController 例外處理
 因CRUD有兩大項錯誤: 1. 資料不存在資料表裡 2. 資料已存在資料表裡，所以客製兩項拋錯處理回傳錯誤訊息(CurrencyException、CurrencyAlreadyExistsException)
