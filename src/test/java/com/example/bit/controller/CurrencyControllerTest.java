@@ -134,7 +134,7 @@ public class CurrencyControllerTest {
     @Test
     @Order(6)
     @DisplayName("POST /addCurr - Add Currency valid exchangeRate format")
-    void testGetCurrencyBadReqForNotBlank() throws JsonProcessingException {
+    void testAddCurrencyBadReqForRateFormat() throws JsonProcessingException {
         CurrencyReq req = new CurrencyReq();
         req.setCode("TWD");
         req.setName("台幣");
@@ -153,7 +153,7 @@ public class CurrencyControllerTest {
     @Test
     @Order(7)
     @DisplayName("POST /getCurr - Get Currency by Code valid not blank")
-    void testAddCurrencyBadReqForRateFormat() throws JsonProcessingException {
+    void testGetCurrencyBadReqForNotBlank() throws JsonProcessingException {
         CurrencyBaseReq req = new CurrencyBaseReq();
         req.setCode("");
 
