@@ -1,20 +1,3 @@
-![image](https://github.com/user-attachments/assets/20c25975-89fa-4275-aa5b-4e3dbb3cbdbd)## ddl :
-CREATE MEMORY TABLE "PUBLIC"."CURRENCY"(
-
-    "CODE" CHARACTER VARYING(5) NOT NULL,
-
-    "CREATED_TIME" TIMESTAMP,
-
-    "EXCHANGE_RATE" NUMERIC(10, 4) NOT NULL,
-
-    "NAME" CHARACTER VARYING(50) NOT NULL,
-
-    "SYMBOL" CHARACTER VARYING(10),
-
-    "UPDATE_TIME" TIMESTAMP
-
-);
-
 ## 內容介紹
 
 * 利用Spring Cloud OpenFeign協助串接coindesk API，以利後續轉換資料(CoinDeskClient.class部分)
